@@ -29,7 +29,10 @@ const SideBar = () => {
     "relative flex items-center justify-center h-10 w-10 mt-2 mb-2 mx-auto shadow-lg bg-gray-500 text-gray-900 rounded-xl";
 
   return (
-    <div className="fixed top-0 left-0 h-screen w-14 m-0 flex flex-col bg-gray-900 text-white">
+    <div
+      key="logo-icon"
+      className="fixed top-0 left-0 h-screen w-14 m-0 flex flex-col bg-gray-900 text-white"
+    >
       <div
         key={Math.random().toString()}
         className="relative flex items-center justify-center h-10 w-10 mt-2 mb-2 mx-auto shadow-lg text-green-800"
@@ -37,9 +40,8 @@ const SideBar = () => {
         <FaShieldVirus size="28" />
       </div>
       {elements.map((_val) => (
-        <Link href={_val.url}>
+        <Link key={_val.text} href={_val.url}>
           <div
-            key={_val.text}
             className={
               router.pathname == _val.url ? selectedStyle : normalStyle
             }

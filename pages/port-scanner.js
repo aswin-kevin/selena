@@ -1,4 +1,6 @@
 import { FaAngleRight } from "react-icons/fa";
+import Targets from "../components/port-scan/Targets";
+import Results from "../components/port-scan/Results";
 
 const PortScanner = () => {
   return (
@@ -9,11 +11,8 @@ const PortScanner = () => {
         </div>
         <div className="text-xl font-bold text-center">Network Scanner</div>
       </div>
-
-      <textarea
-        className="text-sm p-1 ml-8 outline-none h-40 w-128 border-[1.5px] border-blue-400 rounded-md"
-        placeholder="192.34.56.15,192.45.32.89 or 164.78.97.10/18"
-      ></textarea>
+      <Targets />
+      <Results />
     </div>
   );
 };
