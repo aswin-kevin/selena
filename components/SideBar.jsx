@@ -6,7 +6,7 @@ import {
   FaDiscourse,
   FaShieldVirus,
   FaHatCowboy,
-  FaUserAlt,
+  FaDatabase,
 } from "react-icons/fa";
 
 const SideBar = () => {
@@ -14,13 +14,13 @@ const SideBar = () => {
   const elements = [
     { icon: <FaCodeBranch size="25" />, text: "Connector", url: "/home" },
     { icon: <FaBolt size="25" />, text: "OWASP scan", url: "/owasp" },
+    { icon: <FaDatabase size="25" />, text: "DNS Resolver", url: "/dns" },
     { icon: <FaHatCowboy size="25" />, text: "Whois search", url: "/whois" },
     {
       icon: <FaDiscourse size="25" />,
       text: "Port scanner",
       url: "/port-scanner",
     },
-    { icon: <FaUserAlt size="25" />, text: "Account", url: "/account" },
   ];
 
   const normalStyle =
