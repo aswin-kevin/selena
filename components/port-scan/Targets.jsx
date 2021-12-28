@@ -18,16 +18,13 @@ const Targets = () => {
   };
 
   const pushToRedux = (results) => {
-    let _response = [];
-    try {
-      for (const key in results) {
-        _response.push({
+    for (const key in results) {
+      dispatch(
+        portsTableActions.addData({
           ip: key,
           ports: results[key],
-        });
-      }
-    } finally {
-      dispatch(portsTableActions.addData(_response));
+        })
+      );
     }
   };
 

@@ -14,19 +14,14 @@ export const counterActions = CounterSlice.actions;
 
 // ports table redux slice
 let portsTable = {
-  data: [
-    {
-      ip: "127.0.0.1",
-      ports: ["22", "443", "80"],
-    },
-  ],
+  data: [],
 };
 const PortsTableSlice = createSlice({
   name: "ports table",
   initialState: portsTable,
   reducers: {
     addData(state, action) {
-      state.data.concat(action.payload);
+      state.data.push(action.payload);
     },
   },
 });
