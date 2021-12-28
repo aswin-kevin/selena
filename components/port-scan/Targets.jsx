@@ -41,6 +41,7 @@ const Targets = () => {
   const GetValues = async () => {
     let ipArr = [];
     let ipBlockArr = [];
+    let chunkedArr = [];
     let ipString = ipVal;
 
     for (const iterator of ipString.split("\n")) {
@@ -62,7 +63,9 @@ const Targets = () => {
       }
     }
 
-    let chunkedArr = sliceIntoChunks(ipArr, 50);
+    if (ipArr.length > 0) {
+      chunkedArr = sliceIntoChunks(ipArr, 50);
+    }
     ipBlockArr.forEach((element) => {
       chunkedArr.push([element]);
     });
