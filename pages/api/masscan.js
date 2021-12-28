@@ -14,7 +14,8 @@ async function portScanner(ips, ports, options) {
   console.log(cmd);
   const { stdout, stderr } = await exec(cmd);
   let lines = stdout.split("\n");
-  lines.forEach((element, index) => {
+  for (let index = 0; index < lines.length; index++) {
+    const element = array[index];
     if (element.includes("Discovered")) {
       let items = element.split(" ");
       let ip = items[5];
@@ -28,7 +29,7 @@ async function portScanner(ips, ports, options) {
     if (index + 1 == lines.length) {
       return data;
     }
-  });
+  }
 }
 
 export default async function handler(req, res) {
