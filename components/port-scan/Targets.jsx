@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 const Targets = () => {
   const [ipVal, setIpVal] = useState("");
@@ -13,13 +14,26 @@ const Targets = () => {
     return res;
   };
 
-  const GetValues = () => {
+  const runIpSets = async (ipSets, ports) => {
+    for (const ips of ipSets) {
+      let postData = { ips, ports };
+      const response = await axios.post("/api/masscan", postData);
+      console.log(response.data);
+    }
+  };
+
+  const GetValues = async () => {
     let ipArr = [];
+    let ipBlockArr = [];
     let ipString = ipVal;
 
     for (const iterator of ipString.split("\n")) {
-      for (const key in iterator.trim().split(",")) {
-        ipArr.push(key);
+      for (const element of iterator.trim().split(",")) {
+        if (element.includes("/")) {
+          ipBlockArr.push(element);
+        } else {
+          ipArr.push(element);
+        }
       }
     }
 
@@ -27,18 +41,21 @@ const Targets = () => {
     let portString = portVal;
 
     for (const iterator of portString.split(",")) {
-      for (const key in iterator.trim().split(",")) {
+      for (const key of iterator.trim().split(",")) {
         portArr.push(key);
       }
     }
 
-    // ipArr = [...new Set(ipArr)];
-    // portArr = [...new Set(portArr)];
+    let chunkedArr = sliceIntoChunks(ipArr, 50);
+    ipBlockArr.forEach((element) => {
+      chunkedArr.push([element]);
+    });
 
-    console.log(`IP value is : ${ipArr.length}`);
-    console.log(`Port value is : ${portArr.length}`);
+    // passing ip addresses to masscan tool
+    await runIpSets(chunkedArr, portArr);
 
-    console.log(sliceIntoChunks(ipArr, 3));
+    // console.log(chunkedArr);
+    console.log(`Port value is : ${portArr}`);
   };
 
   const onIpChange = (event) => {
