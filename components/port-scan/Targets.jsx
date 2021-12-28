@@ -15,8 +15,9 @@ const Targets = () => {
   };
 
   const runIpSets = async (ipSets, ports) => {
+    const options = ["Pn", "sS", "n"];
     for (const ips of ipSets) {
-      let postData = { ips, ports };
+      let postData = { ips, ports, options };
       const response = await axios.post("/api/masscan", postData);
       console.log(response.data);
     }
