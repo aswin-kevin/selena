@@ -1,7 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { portsTableActions } from "../Store";
 
 const Targets = () => {
+  const dispatch = useDispatch();
   const [ipVal, setIpVal] = useState("");
   const [portVal, setPortVal] = useState("");
 
@@ -14,12 +17,27 @@ const Targets = () => {
     return res;
   };
 
+  const pushToRedux = (results) => {
+    let _response = [];
+    try {
+      for (const key in results) {
+        _response.push({
+          ip: key,
+          ports: results[key],
+        });
+      }
+    } finally {
+      dispatch(portsTableActions.addData(_response));
+    }
+  };
+
   const runIpSets = async (ipSets, ports) => {
     const options = ["Pn", "sS", "n"];
     for (const ips of ipSets) {
       let postData = { ips, ports, options };
       const response = await axios.post("/api/masscan", postData);
       console.log(response.data);
+      pushToRedux(response.data);
     }
   };
 

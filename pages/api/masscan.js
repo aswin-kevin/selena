@@ -1,10 +1,6 @@
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 
-// let data = {};
-// let ips = ["107.180.100.56", "35.231.49.228", "104.156.67.76"];
-// let ports = ["80", "8080", "443", "22", "9000-9010"];
-
 async function portScanner(ips, ports, options) {
   let data = {};
   let hyphen = options.length > 0 ? " -" : "";
@@ -15,7 +11,7 @@ async function portScanner(ips, ports, options) {
   const { stdout, stderr } = await exec(cmd);
   let lines = stdout.split("\n");
   for (let index = 0; index < lines.length; index++) {
-    const element = array[index];
+    const element = lines[index];
     if (element.includes("Discovered")) {
       let items = element.split(" ");
       let ip = items[5];

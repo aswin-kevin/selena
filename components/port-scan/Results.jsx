@@ -1,10 +1,12 @@
-/* This example requires Tailwind CSS v2.0+ */
-const portsData = [
-  { ip: "127.0.0.1", port: "80,8080,443,22" },
-  { ip: "127.0.0.2", port: "6007,8089,5058" },
-];
+import { useSelector } from "react-redux";
+
+// const portsData = [
+//   { ip: "127.0.0.1", port: "80,8080,443,22" },
+//   { ip: "127.0.0.2", port: "6007,8089,5058" },
+// ];
 
 const Results = () => {
+  const portsData = useSelector((state) => state.portsTable.data);
   return (
     <div className="flex flex-col ml-9">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -38,7 +40,9 @@ const Results = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{val.port}</div>
+                      <div className="text-sm text-gray-900">
+                        {val.ports.join(",")}
+                      </div>
                     </td>
                   </tr>
                 ))}
