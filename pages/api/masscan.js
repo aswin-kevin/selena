@@ -33,5 +33,6 @@ export default async function handler(req, res) {
   const ports = req.body.ports;
   const options = req.body.options;
   const resp = await portScanner(ips, ports, options);
+  console.log("Scan done");
   res.status(200).json(resp);
 }

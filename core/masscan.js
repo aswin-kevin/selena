@@ -8,7 +8,7 @@ async function portScanner(ips, ports, options) {
     " "
   )}${hyphen}${options.join(" -")}`;
   console.log(cmd);
-  const { stdout, stderr } = await exec(cmd);
+  const { stdout, stderr } = await execc(cmd);
   let lines = stdout.split("\n");
   for (let index = 0; index < lines.length; index++) {
     const element = lines[index];
