@@ -1,10 +1,5 @@
 import { useSelector } from "react-redux";
 
-// const portsData = [
-//   { ip: "127.0.0.1", port: "80,8080,443,22" },
-//   { ip: "127.0.0.2", port: "6007,8089,5058" },
-// ];
-
 const Results = () => {
   const portsData = useSelector((state) => state.portsTable.data);
   return (
