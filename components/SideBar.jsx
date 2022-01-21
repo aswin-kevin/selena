@@ -12,7 +12,7 @@ import {
 const SideBar = () => {
   const router = useRouter();
   const elements = [
-    { icon: <FaCodeBranch size="25" />, text: "Connector", url: "/home" },
+    { icon: <FaCodeBranch size="25" />, text: "Connectorr", url: "/home" },
     { icon: <FaBolt size="25" />, text: "OWASP scan", url: "/owasp" },
     { icon: <FaDatabase size="25" />, text: "DNS Resolver", url: "/dns" },
     { icon: <FaHatCowboy size="25" />, text: "Whois search", url: "/whois" },
