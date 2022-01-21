@@ -40,7 +40,7 @@ const SideBar = () => {
         <FaShieldVirus size="28" />
       </div>
       {elements.map((_val) => (
-        <Link key={_val.text} href={_val.url}>
+        <Link key={_val.text} href={_val.url} passHref>
           <div
             className={
               router.pathname == _val.url ? selectedStyle : normalStyle
