@@ -7,12 +7,12 @@ pipeline {
                 sh 'sudo npm i && sudo npm run export'
             }
         }
-        stage('Deleting previous images') {
-            steps {
-                echo 'Deleting previously deployed containers'
-                sh 'mvn -B clean verify'
-            }
-        }
+        // stage('Deleting previous images') {
+        //     steps {
+        //         echo 'Deleting previously deployed containers'
+        //         sh 'mvn -B clean verify'
+        //     }
+        // }
         stage('Build docker image') {
             steps {
                 echo 'Started building docker image'
