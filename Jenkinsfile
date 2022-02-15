@@ -17,7 +17,7 @@ pipeline {
             steps {
                 echo 'New version push to db'
                 withDockerRegistry(credentialsId: 'aswin-dockerhub', url: 'https://index.docker.io/v1/') {
-                    sh 'sudo docker push aswinkevin/selena:$BUILD_NUMBER'
+                    sh script: 'sudo docker push aswinkevin/selena:$BUILD_NUMBER'
                 }
             }
         }
