@@ -16,15 +16,13 @@ pipeline {
         stage('Build docker image') {
             steps {
                 echo 'Started building docker image'
-                sh 'sudo docker build -t docker.io/aswinkevin/selena:$BUILD_NUMBER .'
+                sh 'sudo docker build -t aswin/selena:latest .'
             }
         }
-        stage('Push to dockerhub') {
+        stage('Deploy docker image') {
             steps {
-                echo 'New version push to db'
-                withDockerRegistry(credentialsId: 'aswin-dockerhub', url: ' https://index.docker.io/v1/') {
-                    sh 'sudo docker push docker.io/aswinkevin/selena:$BUILD_NUMBER'
-                }
+                echo 'New version of website deployment started'
+                sh 'sudo docker run -d -p 8001:80 --name selena aswin/selena:latest'
             }
         }
     }
