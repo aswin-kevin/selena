@@ -7,14 +7,23 @@ pipeline {
                 sh 'sudo npm i && sudo npm run export'
             }
         }
-        // stage('Build and Push to dockerhub') {
-        //     steps {
-        //         echo 'New version push to db'
-        //         withDockerRegistry(credentialsId: 'aswin-dockerhub', url: ' https://index.docker.io/v1/') {
-        //             sh 'sudo docker build -t docker.io/aswinkevin/selena:$BUILD_NUMBER .'
-        //             sh 'sudo docker push docker.io/aswinkevin/selena:$BUILD_NUMBER'
-        //         }
-        //     }
-        // }
+        stage('Deleting previous images') {
+            steps {
+                echo 'Deleting previously deployed containers'
+                sh 'sudo docker stop $(sudo docker ps -aq) && sudo docker rm $(sudo docker ps -aq)'
+            }
+        }
+        stage('Build docker image') {
+            steps {
+                echo 'Started building docker image'
+                sh 'sudo docker build -t aswin/selena:latest .'
+            }
+        }
+        stage('Deploy docker image') {
+            steps {
+                echo 'New version of website deployment started'
+                sh 'sudo docker run -d -p 8001:80 --name selena aswin/selena:latest'
+            }
+        }
     }
 }
