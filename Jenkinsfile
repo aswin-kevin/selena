@@ -10,7 +10,7 @@ pipeline {
         stage('Build docker image') {
             steps {
                 echo 'Started building docker image'
-                sh 'sudo docker build --file Dockerfile --tag docker.io/aswinkevin/selena:$BUILD_NUMBER'
+                sh 'sudo docker build --tag docker.io/aswinkevin/selena:$BUILD_NUMBER .'
             }
         }
         stage('Push to dockerhub') {
