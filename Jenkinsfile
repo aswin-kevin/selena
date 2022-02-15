@@ -10,14 +10,14 @@ pipeline {
         stage('Build docker image') {
             steps {
                 echo 'Started building docker image'
-                sh 'sudo docker build -t aswinkevin/selena:$BUILD_NUMBER .'
+                sh 'sudo docker build -t docker.io/aswinkevin/selena:$BUILD_NUMBER .'
             }
         }
         stage('Push to dockerhub') {
             steps {
                 echo 'New version push to db'
                 withDockerRegistry(credentialsId: 'aswin-dockerhub', url: ' https://index.docker.io/v1/') {
-                    sh 'sudo docker push aswinkevin/selena:$BUILD_NUMBER'
+                    sh 'sudo docker push docker.io/aswinkevin/selena:$BUILD_NUMBER'
                 }
             }
         }
