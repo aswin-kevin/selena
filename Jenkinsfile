@@ -7,14 +7,19 @@ pipeline {
                 sh 'sudo npm i && sudo npm run export'
             }
         }
-        // stage('Build and Push to dockerhub') {
-        //     steps {
-        //         echo 'New version push to db'
-        //         withDockerRegistry(credentialsId: 'aswin-dockerhub', url: ' https://index.docker.io/v1/') {
-        //             sh 'sudo docker build -t docker.io/aswinkevin/selena:$BUILD_NUMBER .'
-        //             sh 'sudo docker push docker.io/aswinkevin/selena:$BUILD_NUMBER'
-        //         }
-        //     }
-        // }
+        stage('Build docker image') {
+            steps {
+                echo 'Started building docker image'
+                sh 'sudo docker build -t docker.io/aswinkevin/selena:$BUILD_NUMBER .'
+            }
+        }
+        stage('Push to dockerhub') {
+            steps {
+                echo 'New version push to db'
+                withDockerRegistry(credentialsId: 'aswin-dockerhub', url: ' https://index.docker.io/v1/') {
+                    sh 'sudo docker push docker.io/aswinkevin/selena:$BUILD_NUMBER'
+                }
+            }
+        }
     }
 }
