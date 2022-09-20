@@ -13,7 +13,7 @@
 
 **WHO CAN USE**
 
-- Someone who wants to know the developer of a particular repo.
+- Someone who wants to know the developers of a particular repo.
 - Someone who wants to check which domain the repository belongs to.
 
 **How it works !!**
@@ -33,9 +33,9 @@
 - pass the repository name with _-r_ flag
 
   > `python3 selena.py -r <repo-url>`
-  > ~pass the repo url not the account url which contains multiple repositories~
+  > pass the repo url not the account url which contains multiple repositories
 
-- For example if your repo url is ~https://github.com/aws/aws-cdk~
+- For example if your repo url is *https://github.com/aws/aws-cdk*
   > `python3 selena.py -r https://github.com/aws/aws-cdk`
 
 **OUTPUT**
