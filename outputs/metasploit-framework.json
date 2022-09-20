@@ -1,0 +1,46 @@
+{
+  "metaData": {
+    "repository": "https://github.com/rapid7/metasploit-framework",
+    "totalCommits": 74,
+    "totalEmails": 26
+  },
+  "domains": [
+    "rapid7.com",
+    "gmail.com",
+    "metasploit.com",
+    "nixaid.com",
+    "buffered.io"
+  ],
+  "emails": {
+    "rapid7.com": [
+      "gwillcox@rapid7.com",
+      "tod_beardsley@rapid7.com",
+      "metasploit@rapid7.com",
+      "simon_janusz@rapid7.com",
+      "bcook@rapid7.com",
+      "William_Vu@rapid7.com",
+      "Christopher_Granleese@rapid7.com",
+      "bwatters@rapid7.com",
+      "alandavid_foster@rapid7.com",
+      "luke_imhoff@rapid7.com",
+      "Jeffrey_Martin@rapid7.com",
+      "dean_welch@rapid7.com",
+      "shelby_pace@rapid7.com",
+      "hd_moore@rapid7.com"
+    ],
+    "gmail.com": [
+      "erik.wynter@gmail.com",
+      "firefart@gmail.com",
+      "senirupasan@gmail.com",
+      "lance.sanchez@gmail.com",
+      "zeroSteiner@gmail.com",
+      "michaeltcyr@gmail.com",
+      "beleswarprasad@gmail.com",
+      "busterb@gmail.com",
+      "bcoles@gmail.com"
+    ],
+    "metasploit.com": ["kernelsmith@metasploit.com"],
+    "nixaid.com": ["andrey.arapov@nixaid.com"],
+    "buffered.io": ["oj@buffered.io"]
+  }
+}
