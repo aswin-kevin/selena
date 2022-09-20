@@ -1,0 +1,6 @@
+beautifulsoup4
+termcolor
+requests
+argparse
+json
+sys
