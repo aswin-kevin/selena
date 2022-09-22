@@ -26,65 +26,33 @@ def cyan(text):
 def red(text):
     return colored(text, 'red', attrs=['bold'])
 
+def fetchLinks(masterLink,commits,pageNo):
+    print(yellow(f"started scraping page {pageNo}"))
+    nextPointer = None
+    try:
+        page = get(masterLink,headers=headers)
+    except:
+        return None
+    soup = BeautifulSoup(page.content, "html.parser")
+    for link in soup.find_all("a"):
+        href = link.get("href")
+        if "/commit/" in href:
+            commits.add(f"{baseURL}{href}.patch")
+        elif "?after=" in href:
+            nextPointer = href
+    if nextPointer is not None:
+        fetchLinks(nextPointer,commits,pageNo+1)
+    return commits
 
-def fetchLinks(repo,visited,commits):
-    if repo in visited:
-        return
-    folders = []
+
+def getMasterLink(repo):
     try:
         page = get(repo,headers=headers)
     except:
         return
-    visited.add(repo)
     soup = BeautifulSoup(page.content, "html.parser")
-    for link in soup.find_all("a"):
-        href = link.get("href")
-        if branch in href:
-            folders.append(f"{baseURL}{href}")
-        elif "/commit/" in href:
-            commits.add(f"{baseURL}{href}.patch")
-    if not folders:
-        return
-    else:
-        for folder in folders:
-            fetchLinks(folder,visited,commits)
-    return commits
-
-
-def topLevelFetch(repo,visited=set(),commits=set()):
-    global branch
-    folders = []
-    page = get(repo,headers=headers)
-    visited.add(repo)
-    soup = BeautifulSoup(page.content, "html.parser")
-    counter = 0
-    for link in soup.find_all("a"):
-        href = link.get("href")
-        if not href:
-            continue
-        if "/tree/" in href:
-            counter += 1
-            if counter > 3:
-                folders.append(f"{baseURL}{href}")
-        elif "/commit/" in href:
-            commits.add(f"{baseURL}{href}.patch")
-    if not folders:
-        return commits
-    else:
-        branch += folders[0].split("/tree/")[-1].split("/")[0]+ "/"
-        for folder in folders:
-            print(yellow(f"Analysing folder {folder}"),"=>>",green(f"{len(commits)} commits"))
-            fetchLinks(folder,visited,commits)
-    return commits
-
-
-def saveJSON(emails,commitsCount,emailsCount):
-    filename = repository.split("/")[-1]
-    metaData = {"repository" : repository, "totalCommits": commitsCount, "totalEmails" : emailsCount}
-    data = { "metaData" : metaData ,"domains" : list(emails.keys()) ,"emails" : emails}
-    outfile = open(f"outputs/{filename}.json", "w")
-    json.dump(data,outfile,indent=4)
-    outfile.close()
+    masterLink = list(filter(lambda link: "/commits/" in link.get("href"), soup.find_all("a")))
+    return baseURL+masterLink[0].get("href") if len(masterLink) > 0 else None
 
 
 def getEmailId(url):
@@ -105,19 +73,31 @@ def filterDomains(allEmails):
         emails[domain] = emails.get(domain,[]) + [email]
     return emails
 
+def saveJSON(emails,commitsCount,emailsCount):
+    filename = repository.split("/")[-1]
+    metaData = {"repository" : repository, "totalCommits": commitsCount, "totalEmails" : emailsCount}
+    data = { "metaData" : metaData ,"domains" : list(emails.keys()) ,"emails" : emails}
+    outfile = open(f"outputs/{filename}.json", "w")
+    json.dump(data,outfile,indent=4)
+    outfile.close()
+
+
 def run():
-    print(cyan(f"RUNNIG SELENA on respo --> {repository}\n"))
     allEmails = set()
-    try:
-        allCommits = topLevelFetch(repository)
-    except:
+    masterLink = getMasterLink(repository)
+    if masterLink is None:
         print(red("Error !!"), cyan("check your repo url or give a public repo url"))
         sys.exit(4)
-    print(green(f"\nGot {len(allCommits)} commits from repository\n"))
-    for commit in allCommits:
+    print(green("Found commits page !"))
+    allCommits = fetchLinks(masterLink,set(),1)
+    print(green(f"\nFetched {len(allCommits)} commits from this repository"))
+    for idx,commit in enumerate(allCommits,start=1):
+        sys.stdout.write("\rscraping {0} of {1}".format(idx,len(allCommits)))
         email,_ = getEmailId(commit)
         if email:
             allEmails.add(email)
+        sys.stdout.flush()
+    print("")
     emails = filterDomains(allEmails)
     saveJSON(emails,len(allCommits),len(allEmails))
     print(green(f"Found {len(allEmails)} emails from this repository\n"))
